@@ -6,7 +6,7 @@ namespace Application.Util
     {
         public static int RangeNumber(int from, int to)
         {
-            return 36;
+            return new Random().Next(from, to);
         }
     }
 }
