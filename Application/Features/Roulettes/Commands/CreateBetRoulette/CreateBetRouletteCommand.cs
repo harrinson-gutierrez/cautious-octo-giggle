@@ -46,7 +46,7 @@ namespace Application.Features.Roulettes.Commands.CreateBetRoulette
 
             if (roulette == null) throw new NotFoundException(AppResource["Roulette-Not-Found"]);
 
-            if (roulette.State != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
+            if (roulette.state != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
 
             var betRoulette = BetRouletteMapper.ConvertEntity(request);
 

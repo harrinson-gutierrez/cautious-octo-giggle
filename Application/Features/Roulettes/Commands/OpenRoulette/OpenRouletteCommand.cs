@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Roulettes.Commands.OpenRoulette
 {
-    public class CloseRouletteCommand : IRequest<Response<RouletteModel>>
+    public class OpenRouletteCommand : IRequest<Response<RouletteModel>>
     {
         public Guid Id { get; set; }
     }
 
-    public class OpenRouletteCommandHandler : IRequestHandler<CloseRouletteCommand, Response<RouletteModel>>
+    public class OpenRouletteCommandHandler : IRequestHandler<OpenRouletteCommand, Response<RouletteModel>>
     {
         private readonly IRouletteRepository RouletteRepository;
         private readonly IRouletteMapper RouletteMapper;
@@ -31,16 +31,18 @@ namespace Application.Features.Roulettes.Commands.OpenRoulette
             AppResource = appResource;
         }
 
-        public async Task<Response<RouletteModel>> Handle(CloseRouletteCommand request, CancellationToken cancellationToken)
+        public async Task<Response<RouletteModel>> Handle(OpenRouletteCommand request, CancellationToken cancellationToken)
         {
 
             var entity = await RouletteRepository.GetByIdAsync(request.Id);
 
             if (entity == null) throw new NotFoundException(AppResource["Roulette-Not-Found"]);
 
-            if (entity.State == RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Open"]);
+            if (entity.state == RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Open"]);
 
-            entity.State = RouletteState.OPEN.ConvertToString();
+            entity.state = RouletteState.OPEN.ConvertToString();
+
+            await RouletteRepository.UpdateAsync(entity);
 
             return Response<RouletteModel>.Ok(RouletteMapper.Convert(entity));
         }

@@ -52,17 +52,17 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
 
             if (entity == null) throw new NotFoundException(AppResource["Roulette-Not-Found"]);
 
-            if (entity.State != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
+            if (entity.state != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
 
             int winnerRandom = RandomUtil.RangeNumber(0, 36);
 
-            var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id", new { entity.Id });
+            var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id", new { entity.id });
             ProcessBetsRoulette(bets, winnerRandom);
 
             try
             {
                 await BetRouletteRepository.UpdateAllAsync(bets);
-                entity.State = RouletteState.CLOSED.ConvertToString();
+                entity.state = RouletteState.CLOSED.ConvertToString();
                 await RouletteRepository.UpdateAsync(entity);   
             }
             catch (Exception e)

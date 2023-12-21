@@ -29,7 +29,7 @@ namespace Application.Features.Roulettes.Commands.CreateRoulette
         {
             var entity = new Roulette
             {
-                State = RouletteState.CLOSED.ConvertToString()
+                state = RouletteState.CLOSED.ConvertToString()
         };
 
             var savedId = await RouletteRepository.CreateAsync(entity);

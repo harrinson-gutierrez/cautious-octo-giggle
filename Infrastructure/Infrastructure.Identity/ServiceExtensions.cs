@@ -58,11 +58,7 @@ namespace Infrastructure.Identity
             {
                 cfg.TokenValidationParameters = tokenValidationParameters;
             });
-            /*
-            services
-               .AddAuthentication()
-               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", options => { });*/
-        
+
             services.AddSingleton<IAuthorizationPolicyProvider, ResourcePermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, ResourcePermissionHandler>();
 

@@ -12,7 +12,7 @@ namespace Application.Mapping
             return new RouletteModel()
             {
                 Id = roulette.id,
-                State = roulette.State
+                State = roulette.state
             };
         }
 

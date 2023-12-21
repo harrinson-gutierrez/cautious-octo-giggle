@@ -20,6 +20,7 @@ namespace Infrastructure.Persistence
             services.AddTransient<IUserRoleRepository, UserRoleRepository>();
             services.AddTransient<IRolePermissionRepository, RolePermissionRepository>();
             services.AddTransient<IRouletteRepository, RouletteRepository>();
+            services.AddTransient<IBetRouletteRepository, BetRouletteRepository>();
             #endregion
         }
     }

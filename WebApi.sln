@@ -13,11 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{42F60A2C-B6F3-4132-8D05-BB9FE1F1380D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{990C0696-770B-4E50-9D58-A2F2EF9128C9}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{459AC6EB-4B26-492B-BB4D-3812535FAFA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Persistence", "Infrastructure\Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{4192CFAA-35D3-45B4-BECD-B2B9CC339D1E}"
@@ -41,9 +36,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Identity", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Adapter.Email", "Infrastructure\Infrastructure.Adapter.Email\Infrastructure.Adapter.Email.csproj", "{AEF92302-7426-473A-959A-F76A5925E99F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{AB82884E-2A02-4A1C-8F36-6641DCD9361B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{E9CBFD51-11A1-41E5-B91F-062BCF115E9E}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Empresas\DoubleVPartners\Stoyco\StoyCo.Core\.docker\Dockerfile = ..\..\Empresas\DoubleVPartners\Stoyco\StoyCo.Core\.docker\Dockerfile
+		Deployment\Dockerfile = Deployment\Dockerfile
 	EndProjectSection
 EndProject
 Global

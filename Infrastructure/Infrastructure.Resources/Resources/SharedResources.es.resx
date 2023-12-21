@@ -223,16 +223,16 @@
     <value>La contraseña deben tener un largo mínimo de {0} caracteres.</value>
   </data>
   <data name="Roulette-cannot-close" xml:space="preserve">
-    <value>La ruleta no se puede cerrar</value>
+    <value>The roulette cannot close</value>
   </data>
   <data name="Roulette-Has-Not-Open" xml:space="preserve">
-    <value>La ruleta no ha sido abierta</value>
+    <value>The roulette has not open</value>
   </data>
   <data name="Roulette-Has-Open" xml:space="preserve">
-    <value>La Ruleta ya ha sido abierta</value>
+    <value>The roulette has open</value>
   </data>
   <data name="Roulette-Not-Found" xml:space="preserve">
-    <value>La Ruleta no ha encontrada</value>
+    <value>Ruleta no encontrada</value>
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>El usuario ya tiene contraseña.</value>

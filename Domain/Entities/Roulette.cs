@@ -1,11 +1,12 @@
-﻿using Domain.Common;
+﻿using Dapper;
+using Domain.Common;
 using System;
 
 namespace Domain.Entities
 {
+    [Table("roulette")]
     public class Roulette : AbstractEntity<Guid>
     {
-        public string Id { get; set; }
-        public string State { get; set; }
+        public string state { get; set; }
     }
 }
