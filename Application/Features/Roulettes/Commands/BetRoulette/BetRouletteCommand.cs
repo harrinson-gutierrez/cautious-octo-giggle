@@ -19,8 +19,7 @@ namespace Application.Features.Roulettes.Commands.BetRoulette
         public int UserId { get; set; }
         public Guid RouletteId { get; set; }
         public decimal Bet { get; set; }
-        public int? Number { get; set; }
-        public string Color { get; set; }
+        public int Number { get; set; }
     }
 
     public class BetRouletteCommandHandler : IRequestHandler<BetRouletteCommand, Response<BetRouletteModel>>
