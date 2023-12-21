@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Roulette;
+﻿using Application.DTOs.Roulettes;
 using Application.Enums;
 using Application.Exceptions;
 using Application.Interfaces.Mapping;

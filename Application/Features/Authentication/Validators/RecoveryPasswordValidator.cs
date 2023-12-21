@@ -2,7 +2,7 @@
 using Application.Interfaces.Resources;
 using FluentValidation;
 
-namespace AdaIntelligenceApi.Domain.Validators
+namespace Application.Features.Authentication.Validators
 {
     public class RecoveryPasswordValidator : AbstractValidator<RecoveryPasswordRequest>
     {

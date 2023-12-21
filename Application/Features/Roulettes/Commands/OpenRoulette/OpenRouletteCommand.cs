@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Roulette;
+﻿using Application.DTOs.Roulettes;
 using Application.Enums;
 using Application.Exceptions;
 using Application.Interfaces.Mapping;
@@ -10,7 +10,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Roulettes.Commands.CreateRoulette
+namespace Application.Features.Roulettes.Commands.OpenRoulette
 {
     public class CloseRouletteCommand : IRequest<Response<RouletteModel>>
     {

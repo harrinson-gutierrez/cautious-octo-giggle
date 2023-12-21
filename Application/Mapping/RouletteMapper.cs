@@ -1,6 +1,5 @@
-﻿using Application.DTOs.Roulette;
+﻿using Application.DTOs.Roulettes;
 using Application.Interfaces.Mapping;
-using Application.Mappings;
 using Domain.Entities;
 using System.Collections.Generic;
 

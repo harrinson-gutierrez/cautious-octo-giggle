@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Application.Mappings
+namespace Application.Mapping
 {
     public abstract class MapperBase
     {

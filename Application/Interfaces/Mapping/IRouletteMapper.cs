@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Roulette;
+﻿using Application.DTOs.Roulettes;
 using Domain.Entities;
 using System.Collections.Generic;
 

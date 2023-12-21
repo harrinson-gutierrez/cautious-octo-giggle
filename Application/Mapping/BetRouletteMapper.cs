@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Roulettes;
 using Application.Features.Roulettes.Commands.CreateBetRoulette;
 using Application.Interfaces.Mapping;
-using Application.Mappings;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

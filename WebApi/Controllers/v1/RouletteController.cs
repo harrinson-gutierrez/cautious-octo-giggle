@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.DTOs.Roulette;
+using Application.DTOs.Roulettes;
 using Application.Features.Roulettes.Commands.CreateBetRoulette;
 using Application.Features.Roulettes.Commands.CreateRoulette;
 using Application.Features.Roulettes.Queries.GetAllRoulette;

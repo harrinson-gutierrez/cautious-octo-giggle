@@ -41,6 +41,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Identity", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Adapter.Email", "Infrastructure\Infrastructure.Adapter.Email\Infrastructure.Adapter.Email.csproj", "{AEF92302-7426-473A-959A-F76A5925E99F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{AB82884E-2A02-4A1C-8F36-6641DCD9361B}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Empresas\DoubleVPartners\Stoyco\StoyCo.Core\.docker\Dockerfile = ..\..\Empresas\DoubleVPartners\Stoyco\StoyCo.Core\.docker\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

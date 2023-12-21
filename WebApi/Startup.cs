@@ -1,4 +1,5 @@
 using Application;
+using Domain;
 using Infrastructure.Adapter.Email;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;

@@ -1,8 +1,7 @@
-﻿using Application.DTOs.Roulettes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Application.DTOs.Roulette
+namespace Application.DTOs.Roulettes
 {
     public class RouletteModel
     {
