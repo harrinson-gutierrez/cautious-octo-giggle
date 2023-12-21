@@ -54,6 +54,9 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
 
             if (entity.state != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
 
+            entity.state = RouletteState.CLOSED.ConvertToString();
+            await RouletteRepository.UpdateAsync(entity);
+
             int winnerRandom = RandomUtil.RangeNumber(0, 36);
 
             var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id AND deleted_at IS NULL", new { entity.id });
@@ -61,9 +64,7 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
 
             try
             {
-                await BetRouletteRepository.UpdateAllAsync(bets);
-                entity.state = RouletteState.CLOSED.ConvertToString();
-                await RouletteRepository.UpdateAsync(entity);   
+                await BetRouletteRepository.UpdateAllAsync(bets); 
             }
             catch (Exception e)
             {
