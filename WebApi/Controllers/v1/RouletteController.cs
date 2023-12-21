@@ -28,8 +28,8 @@ namespace WebApi.Controllers.v1
 
         [HttpGet]
         [SwaggerOperation(Summary = "Get all roulettes")]
-       // [Authorize]
-        //[ResourceAuthorize("roulette", "read")]
+        [Authorize]
+        [ResourceAuthorize("roulette", "read")]
         public async Task<ActionResult<Response<List<RouletteModel>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllRouletteQuery()));
@@ -37,8 +37,8 @@ namespace WebApi.Controllers.v1
 
         [HttpPost]
         [SwaggerOperation(Summary = "Create Roulette")]
-        //[Authorize]
-        //[ResourceAuthorize("roulette", "new")]
+        [Authorize]
+        [ResourceAuthorize("roulette", "new")]
         public async Task<ActionResult<Response<RouletteModel>>> Create([FromBody] CreateRouletteCommand createRouletteCommand)
         {
             return Ok(await Mediator.Send(createRouletteCommand));
@@ -46,8 +46,8 @@ namespace WebApi.Controllers.v1
 
         [HttpPut("{rouletteId}/Open")]
         [SwaggerOperation(Summary = "Open Roulette")]
-        //[Authorize]
-        //[ResourceAuthorize("roulette", "open")]
+        [Authorize]
+        [ResourceAuthorize("roulette", "open")]
         public async Task<ActionResult<Response<RouletteModel>>> OpenRoulette([FromRoute] Guid rouletteId)
         {
             return Ok(await Mediator.Send(new OpenRouletteCommand()
@@ -59,7 +59,7 @@ namespace WebApi.Controllers.v1
         [HttpPost("{rouletteId}/Bet")]
         [SwaggerOperation(Summary = "New Bet Roulette")]
         [Authorize]
-        //[ResourceAuthorize("roulette", "bet")]
+        [ResourceAuthorize("roulette", "bet")]
         public async Task<ActionResult<Response<RouletteModel>>> BetRoulette([FromRoute] Guid rouletteId, 
                                                                              [FromBody] CreateBetRouletteCommand betRouletteCommand)
         {
@@ -71,8 +71,8 @@ namespace WebApi.Controllers.v1
 
         [HttpPost("{rouletteId}/Close")]
         [SwaggerOperation(Summary = "Close Bet Roulette")]
-        //[Authorize]
-        //[ResourceAuthorize("roulette", "close")]
+        [Authorize]
+        [ResourceAuthorize("roulette", "close")]
         public async Task<ActionResult<Response<RouletteModel>>> CloseRoulette([FromRoute] Guid rouletteId)
         {
             return Ok(await Mediator.Send(new CloseRouletteCommand()

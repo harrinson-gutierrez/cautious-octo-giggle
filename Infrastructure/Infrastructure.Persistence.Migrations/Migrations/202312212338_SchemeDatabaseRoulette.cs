@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence.Migrations.Migrations
                 .WithColumn("state").AsString().NotNullable();
 
             Create.Table("bet_roulette")
-                .WithColumn("id").AsGuid().NotNullable().PrimaryKey().Identity()
+                .WithColumn("id").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("roulette_id").AsGuid().NotNullable()
                 .WithColumn("user_id").AsInt32().NotNullable()
                 .WithColumn("bet").AsDecimal().NotNullable()
