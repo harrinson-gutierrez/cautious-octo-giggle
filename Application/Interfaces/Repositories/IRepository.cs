@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Repositories
 {
-    public interface IRepository<ID, Entity> where Entity:BaseEntity
+    public interface IRepository<ID, Entity>
     {
         Task<ID> CreateAsync(Entity entity);
         Task<Entity> UpdateAsync(Entity entity);
@@ -12,5 +12,8 @@ namespace Application.Interfaces.Repositories
         Task<Entity> GetByIdAsync(ID id);
         Task<List<Entity>> GetAllAsync();
         Task<List<Entity>> GetAllWithQuery(string sql, object param);
+        Task<List<ID>> InsertAllAsync(List<Entity> entities);
+        Task<List<int>> UpdateAllAsync(List<Entity> entities);
+        Task<List<Entity>> DeleteAllAsync(List<Entity> entities);
     }
 }

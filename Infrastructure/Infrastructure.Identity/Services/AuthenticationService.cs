@@ -8,7 +8,6 @@ using Domain.Settings;
 using Google.Apis.Auth;
 using Infrastructure.Adapter.Email.Interfaces;
 using Infrastructure.Adapter.Email.Models;
-using Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -21,6 +20,8 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Identity.Security;
+using Application.Interfaces.Repositories;
 
 namespace Infrastructure.Identity.Services
 {
@@ -38,6 +39,7 @@ namespace Infrastructure.Identity.Services
         private readonly IOptions<AuthenticationOptions> AuthenticationConfiguration;
         private readonly IUserRepository UserRepository;
         private readonly IAuthFacebookService FacebookAuthService;
+        private readonly IPermissionRepository PermissionRepository;
 
         public AuthenticationService(UserManager<AppUser> userManager,
                                      SignInManager<AppUser> signInManager,
@@ -50,7 +52,8 @@ namespace Infrastructure.Identity.Services
                                      IEmailService emailService,
                                      IOptions<AuthenticationOptions> authenticationConfiguration,
                                      IUserRepository userRepository,
-                                     IAuthFacebookService facebookAuthService)
+                                     IAuthFacebookService facebookAuthService,
+                                     IPermissionRepository permissionRepository)
         {
             UserManagerService = userManager;
             SignInManagerService = signInManager;
@@ -64,6 +67,7 @@ namespace Infrastructure.Identity.Services
             AuthenticationConfiguration = authenticationConfiguration;
             UserRepository = userRepository;
             FacebookAuthService = facebookAuthService;
+            PermissionRepository = permissionRepository;
         }
 
         public async Task<AuthenticationResponse> SignInUserAsync(AuthenticationLoginRequest authenticationLogin)
@@ -82,38 +86,52 @@ namespace Infrastructure.Identity.Services
 
         public async Task<UserRegistrationResponse> SignUpUserAsync(UserRegistrationRequest userRegistrationRequest)
         {
+            AppUser user = await UserManagerService.FindByEmailAsync(userRegistrationRequest.Email);
+
+            if (user != null)
+                throw new ApiException(string.Format(AppResource["DuplicateEmail"], userRegistrationRequest.Email));
+
             AppUser newUser = new AppUser()
             {
                 email = userRegistrationRequest.Email,
                 username = userRegistrationRequest.Email,
-                email_confirmed = false
+                email_confirmed = false,
+                name = userRegistrationRequest.Name,
+                security_stamp= Guid.NewGuid().ToString("D")
             };
 
             newUser.password_hash = PasswordHasher.HashPassword(newUser, userRegistrationRequest.Password);
 
-            IdentityResult createdUser = await UserManagerService.CreateAsync(newUser);
 
-            if (createdUser.Succeeded)
+            int? createdUser = await UserRepository.CreateAsync(newUser);
+
+            if (createdUser != null)
             {
+                newUser.id = createdUser.GetValueOrDefault();
                 await UserManagerService.AddToRolesAsync(newUser, new List<string> { "USER" });
 
-                string token = await UserManagerService.GenerateEmailConfirmationTokenAsync(newUser);
+                //string token = await UserManagerService.GenerateEmailConfirmationTokenAsync(newUser);
 
-                string route = string.Format(AuthenticationConfiguration.Value.FrontEndUrl + AuthenticationConfiguration.Value.ActivateAccountRoute, newUser.email, WebUtility.UrlEncode(token));
+                //string route = string.Format(AuthenticationConfiguration.Value.FrontEndUrl + AuthenticationConfiguration.Value.ActivateAccountRoute, newUser.email, WebUtility.UrlEncode(token));
 
-                await EmailService.SendEmailWithTemplate(new EmailTemplateRequest()
-                {
-                    Subject = AppResource["EmailConfirmedAccountSubject"],
-                    Receivers = new List<string>() { newUser.email},
-                    Data = new { token = route , newUser.username, frontUrl = AuthenticationConfiguration.Value.FrontEndUrl + AuthenticationConfiguration.Value.Logo },
-                    Template = AppResource["EmailConfirmedAccountTemplate"]
-                });
+                try { 
+                    await EmailService.SendEmail(new EmailRequest()
+                    {
+                        Subject = AppResource["EmailConfirmedAccountSubject"],
+                        Receivers = new List<string>() { newUser.email},
+                        TextBody = "Increible! Ya estas registrado con nosostros. Bienvenido!",
+                        HtmlBody = "<p>Increible! Ya estas registrado con nosostros. Bienvenido!</p>"
+                    });
+                }
+                catch(Exception e) {
+                    Logger.LogError(e, "It wasn't possible send email confirmed to email");
+                }
             }   
 
             return new UserRegistrationResponse()
             {
-                Success = createdUser.Succeeded,
-                Errors = createdUser.Errors.Select(x => x.Description).ToList()
+                Success = createdUser.HasValue,
+                Errors = new List<string>()
             };
         }
 
@@ -133,7 +151,7 @@ namespace Infrastructure.Identity.Services
             {
                 Subject = AppResource["EmailRecoveryPasswordSubject"],
                 Receivers = new List<string>() { user.email},
-                Data = new {user.username, token},
+                Data = new { username= user.name, token},
                 Template = AppResource["EmailRecoveryPasswordTemplate"]
             });
         }
@@ -158,6 +176,18 @@ namespace Infrastructure.Identity.Services
                     Template = AppResource["EmailRecoveryPasswordConfirmTemplate"]
                 });
             }
+
+            return result;
+        }
+
+        public async Task<bool> ValidateOtpRecoveryPasswordAsync(ValidateOtpRecoveryPasswordRequest validateOtpRecoveryPasswordRequest)
+        {
+            AppUser user = await UserManagerService.FindByEmailAsync(validateOtpRecoveryPasswordRequest.Email);
+
+            if (user == null)
+                throw new ApiException(string.Format(AppResource["ExceptionUserNotFound"], validateOtpRecoveryPasswordRequest.Email));
+
+            bool result = await UserManagerService.VerifyUserTokenAsync(user, UserManagerService.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", validateOtpRecoveryPasswordRequest.Token);
 
             return result;
         }
@@ -205,7 +235,7 @@ namespace Infrastructure.Identity.Services
 
             if(string.IsNullOrEmpty(user.password_hash))
             {
-                var userLogins = await UserRepository.GetAppUserLoginsByUser(user.user_id);
+                var userLogins = await UserRepository.GetAppUserLoginsByUser(user.id);
                 var textForProviders = string.Join(",", userLogins.Select(x => x.login_provider));
                 throw new ApiException(AppResource["UserHasLoginWithProvider", new object[] { textForProviders }]);
             }
@@ -298,7 +328,7 @@ namespace Infrastructure.Identity.Services
             {
                 token = Guid.NewGuid(),
                 jwt_id = token.Id,
-                user_id = appUser.user_id,
+                user_id = appUser.id,
                 creation_date = DateTime.UtcNow,
                 expired_date = DateTime.UtcNow.AddDays(CustomJwtOptions.Value.RefreshTokenExpiredDaysTime)
             };
@@ -316,14 +346,28 @@ namespace Infrastructure.Identity.Services
 
         private async Task<Claim[]> CreateClaimsAsync(AppUser appUser)
         {
-            return new[]
+            var roles = await UserManagerService.GetRolesAsync(appUser);
+            var permissions = await PermissionRepository.GetPermissionsByUserId(appUser.id);
+
+            var claims = new List<Claim>()
             {
-                    new Claim("id", appUser.user_id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.UniqueName, appUser.username),
-                    new Claim(JwtRegisteredClaimNames.Email, appUser.email),
-                    new Claim("role", string.Join(",", await UserManagerService.GetRolesAsync(appUser)))
-                };
+                 new Claim("id", appUser.id.ToString()),
+                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                 new Claim(JwtRegisteredClaimNames.UniqueName, appUser.username),
+                 new Claim(JwtRegisteredClaimNames.Email, appUser.email)
+            };
+
+            foreach (string role in roles)
+            {
+                claims.Add(new Claim("role", role));
+            }
+
+            foreach (Permission permission in permissions)
+            {
+                claims.Add(new Claim(CustomClaimTypes.Permission, permission.name));
+            }
+
+            return claims.ToArray();
         }
 
         private ClaimsPrincipal GetPrincipalClaimsFromToken(string token)
@@ -408,7 +452,7 @@ namespace Infrastructure.Identity.Services
                         {
                             login_provider = "Google",
                             provider_key = payload.Subject,
-                            user_id = user.user_id,
+                            user_id = user.id,
                             provider_displayname = payload.Name
                         });
                     }
@@ -426,7 +470,7 @@ namespace Infrastructure.Identity.Services
                     {
                         login_provider = "Google",
                         provider_key = payload.Subject,
-                        user_id = user.user_id,
+                        user_id = user.id,
                         provider_displayname = payload.Name
                     });
                 }
@@ -468,7 +512,7 @@ namespace Infrastructure.Identity.Services
                         {
                             login_provider = "Facebook",
                             provider_key = payloadValidate.Data.UserId,
-                            user_id = user.user_id,
+                            user_id = user.id,
                             provider_displayname = payloadUser.FirstName + " " + payloadUser.LastName
                         });
                     }
@@ -486,7 +530,7 @@ namespace Infrastructure.Identity.Services
                     {
                         login_provider = "Facebook",
                         provider_key = payloadValidate.Data.UserId,
-                        user_id = user.user_id,
+                        user_id = user.id,
                         provider_displayname = payloadUser.FirstName + " " + payloadUser.LastName
                     });
                 }

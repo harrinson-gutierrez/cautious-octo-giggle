@@ -27,7 +27,7 @@ namespace Infrastructure.Persistence.Migrations
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     .AddPostgres()
-                    .WithGlobalConnectionString( "Host=localhost;Username=postgres;Password=123456;Database=ada2;")
+                    .WithGlobalConnectionString("Host=localhost;Username=postgres;Password=@Bofu2022;Database=roulette;")
                     .ScanIn(typeof(MigrationAssembly).Assembly).For.Migrations().
                                                                 For.EmbeddedResources())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())

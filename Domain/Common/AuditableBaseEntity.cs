@@ -2,12 +2,11 @@
 
 namespace Domain.Common
 {
-    public abstract class AuditableBaseEntity
+    public abstract class AuditableBaseEntity<ID> : AbstractEntity<ID>
     {
-        public virtual int Id { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime Created { get; set; }
-        public int LastModifiedBy { get; set; }
-        public DateTime? LastModified { get; set; }
+        public int created_by { get; set; }
+        public DateTime created { get; set; }
+        public int update_by { get; set; }
+        public DateTime? updated { get; set; }
     }
 }

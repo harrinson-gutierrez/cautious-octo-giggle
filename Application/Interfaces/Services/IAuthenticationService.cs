@@ -12,6 +12,7 @@ namespace Application.Interfaces.Services
         Task<UserRegistrationResponse> SignUpUserAsync(UserRegistrationRequest userRegistrationRequest);
 
         Task<EmailResponse> RecoveryPasswordAsync(RecoveryPasswordRequest recoveryPasswordRequest);
+        Task<bool> ValidateOtpRecoveryPasswordAsync(ValidateOtpRecoveryPasswordRequest validateOtpRecoveryPasswordRequest);
 
         Task<IdentityResult> RecoveryPasswordConfirmedAsync(RecoveryPasswordConfirmRequest recoveryPasswordConfirmRequest);
 

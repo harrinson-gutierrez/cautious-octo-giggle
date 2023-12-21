@@ -69,10 +69,6 @@ namespace Infrastructure.Adapter.Email.Adapters
                 Logger.LogError(ex, "Email has not send");
                 emailResponse.Success = false;
             }
-            finally
-            {
-                Client.Dispose();
-            }
 
             return emailResponse;
         }
@@ -121,10 +117,6 @@ namespace Infrastructure.Adapter.Email.Adapters
                     Logger.LogError(ex, "Email has not send");
                     emailResponse.Success = false;
                 }
-                finally
-                {
-                    Client.Dispose();
-                }
             }
             Logger.LogInformation("Email send!");
 
@@ -146,7 +138,7 @@ namespace Infrastructure.Adapter.Email.Adapters
                     BccAddresses = emailWithTemplateRequest.CopyReceiversHidden
                 },
                 Template = emailWithTemplateRequest.Template,
-                TemplateData = JsonSerializer.Serialize(emailWithTemplateRequest.Data)
+                TemplateData = JsonSerializer.Serialize(emailWithTemplateRequest.Data),
             };
             try
             {
@@ -158,8 +150,6 @@ namespace Infrastructure.Adapter.Email.Adapters
                 Logger.LogError(ex, "Email has not send");
                 emailResponse.Success = false;
             }
-
-            Client.Dispose();
 
             return emailResponse;
         }

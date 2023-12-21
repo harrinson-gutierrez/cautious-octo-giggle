@@ -4,8 +4,8 @@ using System;
 
 namespace Domain.Entities
 {
-    [Table("refresh_tokens")]
-    public class RefreshToken : BaseEntity
+    [Table("refresh_token")]
+    public class RefreshToken
     {
         [Key]
         public Guid token { get; set; }

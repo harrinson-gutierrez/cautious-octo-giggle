@@ -15,13 +15,12 @@ namespace WebApi.Extensions
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Web Api Template s",
-                    Description = "Template para construccion de API en netcore",
+                    Title = "Roulette API",
+                    Description = "Roulette API",
                     Contact = new OpenApiContact
                     {
-                        Name = "Bofugroup Colombia",
-                        Email = "developer@bofugroupcolombia.com",
-                        Url = new Uri("https://bofugroupcolombia.com"),
+                        Name = "Harrinson.dev",
+                        Email = "hgutieco@gmail.com",
                     }
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -55,11 +54,8 @@ namespace WebApi.Extensions
         {
             services.AddApiVersioning(config =>
             {
-                // Specify the default API Version as 1.0
                 config.DefaultApiVersion = new ApiVersion(1, 0);
-                // If the client hasn't specified the API version in the request, use the default API version number 
                 config.AssumeDefaultVersionWhenUnspecified = true;
-                // Advertise the API versions supported for the particular endpoint
                 config.ReportApiVersions = true;
             });
         }

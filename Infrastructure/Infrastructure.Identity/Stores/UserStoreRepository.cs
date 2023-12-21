@@ -26,7 +26,7 @@ namespace Infrastructure.Identity.Stores
         public async Task<IdentityResult> CreateAsync(AppUser user, CancellationToken cancellationToken)
         {
             using IDbConnection con = new NpgsqlConnection(ConnectionString);
-            await con.InsertAsync<Guid, AppUser>(user);
+            await con.InsertAsync<int, AppUser>(user);
             return IdentityResult.Success;
         }
 
@@ -43,18 +43,16 @@ namespace Infrastructure.Identity.Stores
         {
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
-                return await con.QuerySingleOrDefaultAsync<AppUser>(@"SELECT * FROM users
-                                                           WHERE user_id = @userId", new { userId = Guid.Parse(userId) });
+                return await con.QuerySingleOrDefaultAsync<AppUser>(@"SELECT * FROM app_user
+                                                           WHERE id = @userId", new { userId = Guid.Parse(userId) });
             }
         }
 
         public async Task<AppUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            using (IDbConnection con = new NpgsqlConnection(ConnectionString))
-            {
-                return await con.QuerySingleOrDefaultAsync<AppUser>(@"SELECT * FROM users
-                                                           WHERE username = @normalizedUserName", new {  normalizedUserName });
-            }
+            using IDbConnection con = new NpgsqlConnection(ConnectionString);
+            return await con.QueryFirstOrDefaultAsync<AppUser>(@"SELECT * FROM app_user
+                                                           WHERE username = @normalizedUserName", new { normalizedUserName });
         }
 
         public Task<string> GetNormalizedUserNameAsync(AppUser user, CancellationToken cancellationToken)
@@ -64,7 +62,7 @@ namespace Infrastructure.Identity.Stores
 
         public Task<string> GetUserIdAsync(AppUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.user_id.ToString());
+            return Task.FromResult(user.id.ToString());
         }
 
         public Task<string> GetUserNameAsync(AppUser user, CancellationToken cancellationToken)
@@ -135,8 +133,8 @@ namespace Infrastructure.Identity.Stores
         {
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
-                return await con.QuerySingleOrDefaultAsync<AppUser>(@"SELECT * FROM users
-                                                           WHERE email = @normalizedEmail", new { normalizedEmail });
+                return await con.QueryFirstOrDefaultAsync<AppUser>(@"SELECT * FROM app_user
+                                                           WHERE UPPER(email) = @normalizedEmail", new { normalizedEmail });
             }
         }
 
@@ -155,10 +153,10 @@ namespace Infrastructure.Identity.Stores
         {
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
-                await con.QueryAsync(@"INSERT INTO users_roles(user_id,role_id) " +
-                                        "SELECT @userId, role_id " +
-                                        "FROM roles " +
-                                        "WHERE role_name = @roleName", new { userId = user.user_id, roleName });
+                await con.QueryAsync(@"INSERT INTO user_role(user_id,role_id) 
+                                        SELECT @userId, role.id 
+                                        FROM role 
+                                        WHERE role.name = @roleName", new { userId = user.id, roleName });
             }
         }
 
@@ -166,10 +164,10 @@ namespace Infrastructure.Identity.Stores
         {
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
-                await con.ExecuteAsync("DELETE FROM users_roles usr" +
-                                        "INNER JOIN roles ON roles.role_id = usr.role_id" +
-                                        "WHERE usr.user_id = @userId AND roles.role_name = @roleName",
-                                        new { userId = user.user_id, roleName });
+                await con.ExecuteAsync(@"DELETE FROM user_role usr
+                                        INNER JOIN role ON role.role_id = usr.role_id
+                                        WHERE usr.user_id = @userId AND role.name = @roleName",
+                                        new { userId = user.id, roleName });
             }
         }
 
@@ -177,11 +175,11 @@ namespace Infrastructure.Identity.Stores
         {
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
-                return (await con.QueryAsync<string>("SELECT r.role_name " +
-                                      "FROM users_roles AS ur " +
-                                      "JOIN roles AS r ON ur.role_id = r.role_id " +
-                                      "WHERE ur.user_id = @userId",
-                                      new { userId = user.user_id })).AsList();
+                return (await con.QueryAsync<string>(@"SELECT r.name
+                                      FROM user_role AS ur 
+                                      JOIN role AS r ON ur.role_id = r.id
+                                      WHERE ur.user_id = @userId",
+                                      new { userId = user.id })).AsList();
             }
         }
 
@@ -196,11 +194,11 @@ namespace Infrastructure.Identity.Stores
             using (IDbConnection con = new NpgsqlConnection(ConnectionString))
             {
                 return (IList<AppUser>)(await con.QueryAsync(
-                  "SELECT u.* " +
-                  "FROM users_roles AS ur " +
-                  "JOIN roles AS r ON ur.role_id = r.role_id " +
-                  "JOIN users AS u ON ur.user_id = u.user_id " +
-                  "WHERE r.role_name = @roleName",
+                  @"SELECT u.* 
+                      FROM user_role AS ur
+                      JOIN role AS r ON ur.role_id = r.id
+                      JOIN app_user AS u ON ur.user_id = u.id
+                      WHERE r.name = @roleName",
                   new { roleName })
                 ).AsList();
             }
@@ -219,6 +217,21 @@ namespace Infrastructure.Identity.Stores
         public Task<string> GetSecurityStampAsync(AppUser user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.security_stamp);
+        }
+
+        public Task ReplaceCodesAsync(AppUser user, IEnumerable<string> recoveryCodes, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RedeemCodeAsync(AppUser user, string code, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountCodesAsync(AppUser user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

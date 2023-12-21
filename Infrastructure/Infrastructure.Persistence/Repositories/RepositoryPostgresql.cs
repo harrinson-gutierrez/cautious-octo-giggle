@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
 using Dapper;
 using Domain.Common;
+using Infrastructure.Persistence.Extensions;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class RepositoryPostgresql<ID, Entity> : BaseRepository, IRepository<ID, Entity> where Entity : BaseEntity
+    public class RepositoryPostgresql<ID, Entity> : BaseRepository, IRepository<ID, Entity>
     {
         public RepositoryPostgresql(IConfiguration configuration) : base(configuration) {  }
 
@@ -47,6 +48,22 @@ namespace Infrastructure.Persistence.Repositories
         {
             using IDbConnection conn = new NpgsqlConnection(ConnectionString);
             return (await conn.GetListAsync<Entity>(sql, param)).AsList();
+        }
+        public virtual async Task<List<ID>> InsertAllAsync(List<Entity> entities)
+        {
+            using IDbConnection conn = new NpgsqlConnection(ConnectionString);
+            return await conn.InsertAllAsync<ID, Entity>(entities);
+        }
+
+        public virtual async Task<List<int>> UpdateAllAsync(List<Entity> entities)
+        {
+            using IDbConnection conn = new NpgsqlConnection(ConnectionString);
+            return await conn.UpdateAllAsync<ID, Entity>(entities);
+        }
+        public virtual async Task<List<Entity>> DeleteAllAsync(List<Entity> entities)
+        {
+            using IDbConnection conn = new NpgsqlConnection(ConnectionString);
+            return await conn.DeleteAllAsync<ID, Entity>(entities);
         }
     }
 }

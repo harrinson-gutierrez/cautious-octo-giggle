@@ -121,13 +121,13 @@
     <value>Confirmar cuenta de usuario</value>
   </data>
   <data name="EmailConfirmedAccountTemplate" xml:space="preserve">
-    <value>ADA-ConfirmAccount-En</value>
+    <value>ConfirmAccount-En</value>
   </data>
   <data name="EmailRecoveryPasswordSubject" xml:space="preserve">
     <value>Recuperación de contraseña</value>
   </data>
   <data name="EmailRecoveryPasswordTemplate" xml:space="preserve">
-    <value>ADA-RecoveryPassword-En</value>
+    <value>RecoveryPassword-En</value>
   </data>
   <data name="ExceptionInvalidRequestEmailNotConfirmed" xml:space="preserve">
     <value>El correo no ha sido confirmado</value>

@@ -1,8 +1,11 @@
 ﻿using Domain.Entities;
 using Domain.Settings;
+using Infrastructure.Identity.Security;
 using Infrastructure.Identity.Stores;
 using Infrastructure.Identity.Util;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +20,7 @@ namespace Infrastructure.Identity
         {
             services.Configure<CustomJwtOptions>(options => configuration.GetSection("Authentication:Jwt").Bind(options));
 
-            services.AddIdentity<AppUser, AppRole>(options =>
+            services.AddIdentity<AppUser, AppRol>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = false;
@@ -55,6 +58,16 @@ namespace Infrastructure.Identity
             {
                 cfg.TokenValidationParameters = tokenValidationParameters;
             });
+            /*
+            services
+               .AddAuthentication()
+               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", options => { });*/
+        
+            services.AddSingleton<IAuthorizationPolicyProvider, ResourcePermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, ResourcePermissionHandler>();
+
+            services.AddScoped<IAuthenticationHandler, BasicAuthenticationHandler>();
+
         }
     }
 }

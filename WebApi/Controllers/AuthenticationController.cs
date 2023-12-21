@@ -4,6 +4,7 @@ using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace WebApi.Controllers
 
         [Route("Login")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Iniciar sesion")]
         public async Task<IActionResult> Login([FromBody] AuthenticationLoginRequest authenticationLogin)
         {
             return Ok(await AuthenticationService.SignInUserAsync(authenticationLogin));
@@ -29,6 +31,7 @@ namespace WebApi.Controllers
 
         [Route("Login/Google")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Iniciar sesion con google")]
         public async Task<IActionResult> LoginWithGoogle([FromBody] AuthenticationLoginGoogleRequest authenticationLoginGoogleRequest)
         {
             return Ok(await AuthenticationService.SignInWithGoogleAsync(authenticationLoginGoogleRequest));
@@ -36,6 +39,7 @@ namespace WebApi.Controllers
 
         [Route("Login/Facebook")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Iniciar sesion con facebook")]
         public async Task<IActionResult> LoginWithFacebook([FromBody] AuthenticationLoginFacebookRequest authenticationLoginFacebookRequest)
         {
             return Ok(await AuthenticationService.SignInWithFacebookAsync(authenticationLoginFacebookRequest));
@@ -43,6 +47,7 @@ namespace WebApi.Controllers
 
         [Route("Register")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Registro de nuevo usuario")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
             UserRegistrationResponse response = await AuthenticationService.SignUpUserAsync(userRegistrationRequest);
@@ -54,6 +59,7 @@ namespace WebApi.Controllers
 
         [Route("Recovery/Password")]    
         [HttpPost]
+        [SwaggerOperation(Summary = "Recuperar contraseña")]
         public async Task<IActionResult> RecoveryPassword([FromBody] RecoveryPasswordRequest recoveryPasswordRequest)
         {
             if ((await AuthenticationService.RecoveryPasswordAsync(recoveryPasswordRequest)).Success)
@@ -62,9 +68,21 @@ namespace WebApi.Controllers
                 return BadRequest();
         }
 
+        [Route("Recovery/Validate")]
+        [HttpPost]
+        [SwaggerOperation(Summary = "Validar codigo otp para recuperar contraseña")]
+        public async Task<IActionResult> RecoveryPassword([FromBody] ValidateOtpRecoveryPasswordRequest validateOtpRecoveryPasswordRequest)
+        {
+            bool response = await AuthenticationService.ValidateOtpRecoveryPasswordAsync(validateOtpRecoveryPasswordRequest);
+            if (response)
+                return NoContent();
+            else
+                return BadRequest(new { Message = "Code not valid" });
+        }
 
         [Route("Recovery/Confirm")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Confirmación de codigo OTP para recuperar contraseña")]
         public async Task<IActionResult> RecoveryPassword([FromBody] RecoveryPasswordConfirmRequest recoveryPasswordConfirmRequest)
         {
             IdentityResult response = await AuthenticationService.RecoveryPasswordConfirmedAsync(recoveryPasswordConfirmRequest);
@@ -76,6 +94,7 @@ namespace WebApi.Controllers
 
         [Route("Activate/Send")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Reenviar correo de confirmacion de activación")]
         public async Task<IActionResult> ReSendConfirmEmail([FromBody] ReSendEmailConfirmationRequest reSendEmailConfirmationRequest)
         {
             if ((await AuthenticationService.ReSendEmailConfirmationAsync(reSendEmailConfirmationRequest)).Success)
@@ -87,6 +106,7 @@ namespace WebApi.Controllers
 
         [Route("Activate/Confirm")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Confirmar otp activación")]
         public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailConfirmationRequest confirmEmailConfirmationRequest)
         {
             IdentityResult response = await AuthenticationService.ConfirmEmailConfirmationAsync(confirmEmailConfirmationRequest);
@@ -99,6 +119,7 @@ namespace WebApi.Controllers
         [Route("Logout")]
         [HttpPost]
         [Authorize]
+        [SwaggerOperation(Summary = "Inabilitar token de seguridad")]
         public async Task<IActionResult> Logout([FromBody] AccessTokenAuthorizationHeader accessTokenAuthorizationHeader)
         {
             IdentityResult response = await AuthenticationService.LogoutAsync(
@@ -110,6 +131,5 @@ namespace WebApi.Controllers
             else
                 return BadRequest(new { message = string.Join('\n', response.Errors.Select(x => x.Description)) });
         }
-
     }
 }

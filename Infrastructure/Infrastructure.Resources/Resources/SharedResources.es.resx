@@ -130,19 +130,19 @@
     <value>Confirmar cuenta de usuario</value>
   </data>
   <data name="EmailConfirmedAccountTemplate" xml:space="preserve">
-    <value>ADA-ConfirmAccount</value>
+    <value>ConfirmAccount</value>
   </data>
   <data name="EmailRecoveryPasswordConfirmSubject" xml:space="preserve">
     <value>Confirmacion de cambio de contraseña</value>
   </data>
   <data name="EmailRecoveryPasswordConfirmTemplate" xml:space="preserve">
-    <value>ADA-RecoveryPasswordConfirm</value>
+    <value>RecoveryPasswordConfirm</value>
   </data>
   <data name="EmailRecoveryPasswordSubject" xml:space="preserve">
     <value>Recuperación de contraseña</value>
   </data>
   <data name="EmailRecoveryPasswordTemplate" xml:space="preserve">
-    <value>ADA-RecoveryPassword</value>
+    <value>RecoveryPassword</value>
   </data>
   <data name="ExceptionInvalidRequestEmailNotConfirmed" xml:space="preserve">
     <value>El correo no ha sido confirmado</value>

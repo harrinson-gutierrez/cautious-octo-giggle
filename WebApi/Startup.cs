@@ -1,7 +1,5 @@
 using Application;
 using Infrastructure.Adapter.Email;
-using Infrastructure.Adapter.SQS;
-using Infrastructure.Adapter.Storage;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Migrations;
@@ -31,7 +29,6 @@ namespace WebApi
             services.AddPersistenceInfrastructure(Configuration);
             services.AddFluentMigratorConsole(Configuration);
             services.AddEmailAdapter(Configuration);
-            services.AddStorageAdapter(Configuration);
             services.AddInfrastructureIdentity(Configuration);
             services.AddInfrastructureIdentityAuthentication(Configuration);
             services.AddInfrastructureResources();
@@ -40,7 +37,6 @@ namespace WebApi
             services.AddSwaggerExtension();
             services.AddApiVersioningExtension();
             services.AddHealthChecks();
-            services.AddSQSAdapter(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    [Table("users_logins")]
+    [Table("user_login")]
     public class AppUserLogin
     {
         [Key]
