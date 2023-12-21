@@ -38,7 +38,6 @@ namespace Infrastructure.Identity.Services
         private readonly IEmailService EmailService;
         private readonly IOptions<AuthenticationOptions> AuthenticationConfiguration;
         private readonly IUserRepository UserRepository;
-        private readonly IAuthFacebookService FacebookAuthService;
         private readonly IPermissionRepository PermissionRepository;
 
         public AuthenticationService(UserManager<AppUser> userManager,
@@ -52,7 +51,6 @@ namespace Infrastructure.Identity.Services
                                      IEmailService emailService,
                                      IOptions<AuthenticationOptions> authenticationConfiguration,
                                      IUserRepository userRepository,
-                                     IAuthFacebookService facebookAuthService,
                                      IPermissionRepository permissionRepository)
         {
             UserManagerService = userManager;
@@ -66,7 +64,6 @@ namespace Infrastructure.Identity.Services
             EmailService = emailService;
             AuthenticationConfiguration = authenticationConfiguration;
             UserRepository = userRepository;
-            FacebookAuthService = facebookAuthService;
             PermissionRepository = permissionRepository;
         }
 
@@ -109,10 +106,6 @@ namespace Infrastructure.Identity.Services
             {
                 newUser.id = createdUser.GetValueOrDefault();
                 await UserManagerService.AddToRolesAsync(newUser, new List<string> { "USER" });
-
-                //string token = await UserManagerService.GenerateEmailConfirmationTokenAsync(newUser);
-
-                //string route = string.Format(AuthenticationConfiguration.Value.FrontEndUrl + AuthenticationConfiguration.Value.ActivateAccountRoute, newUser.email, WebUtility.UrlEncode(token));
 
                 try { 
                     await EmailService.SendEmail(new EmailRequest()
@@ -480,66 +473,6 @@ namespace Infrastructure.Identity.Services
             catch(InvalidJwtException ex)
             {
                 Logger.LogError(ex, "Validate Google Token Failure");
-                throw new ApiException("Connection with google not complete");
-            }
-        }
-
-        public async Task<AuthenticationResponse> SignInWithFacebookAsync(AuthenticationLoginFacebookRequest authenticationLoginFacebookRequest)
-        {
-            try
-            {
-                var payloadValidate = await FacebookAuthService.ValidateTokenAsync(authenticationLoginFacebookRequest.AccessToken);
-                var payloadUser = await FacebookAuthService.GetUserInfoAsync(authenticationLoginFacebookRequest.AccessToken);
-
-                AppUser user = await UserManagerService.FindByEmailAsync(payloadUser.Email);
-
-                if (user == null)
-                {
-                    user = new AppUser()
-                    {
-                        email = payloadUser.Email,
-                        username = payloadUser.Email,
-                        email_confirmed = true
-                    };
-
-                    IdentityResult createdUser = await UserManagerService.CreateAsync(user);
-
-                    if (createdUser.Succeeded)
-                    {
-                        await UserManagerService.AddToRolesAsync(user, new List<string> { "USER" });
-
-                        await UserRepository.CreateAppUserLogin(new AppUserLogin()
-                        {
-                            login_provider = "Facebook",
-                            provider_key = payloadValidate.Data.UserId,
-                            user_id = user.id,
-                            provider_displayname = payloadUser.FirstName + " " + payloadUser.LastName
-                        });
-                    }
-                    else
-                    {
-                        throw new ApiException("Cannot create account with Facebook");
-                    }
-                }
-
-                var appUserLogin = await UserRepository.GetAppUserLoginByUserAndProvider("Facebook", payloadValidate.Data.UserId);
-
-                if (appUserLogin == null)
-                {
-                    await UserRepository.CreateAppUserLogin(new AppUserLogin()
-                    {
-                        login_provider = "Facebook",
-                        provider_key = payloadValidate.Data.UserId,
-                        user_id = user.id,
-                        provider_displayname = payloadUser.FirstName + " " + payloadUser.LastName
-                    });
-                }
-
-                return await GenerateAuthenticationForUser(user);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Validate Facebook Token Failure");
                 throw new ApiException("Connection with google not complete");
             }
         }

@@ -37,14 +37,6 @@ namespace WebApi.Controllers
             return Ok(await AuthenticationService.SignInWithGoogleAsync(authenticationLoginGoogleRequest));
         }
 
-        [Route("Login/Facebook")]
-        [HttpPost]
-        [SwaggerOperation(Summary = "Iniciar sesion con facebook")]
-        public async Task<IActionResult> LoginWithFacebook([FromBody] AuthenticationLoginFacebookRequest authenticationLoginFacebookRequest)
-        {
-            return Ok(await AuthenticationService.SignInWithFacebookAsync(authenticationLoginFacebookRequest));
-        }
-
         [Route("Register")]
         [HttpPost]
         [SwaggerOperation(Summary = "Registro de nuevo usuario")]

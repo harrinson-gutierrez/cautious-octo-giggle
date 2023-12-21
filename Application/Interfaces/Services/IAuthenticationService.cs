@@ -23,6 +23,5 @@ namespace Application.Interfaces.Services
         Task<IdentityResult> LogoutAsync(LogoutRequest logoutRequest);
 
         Task<AuthenticationResponse> SignInWithGoogleAsync(AuthenticationLoginGoogleRequest authenticationLoginGoogleRequest);
-        Task<AuthenticationResponse> SignInWithFacebookAsync(AuthenticationLoginFacebookRequest authenticationLoginFacebookRequest);
     }
 }
