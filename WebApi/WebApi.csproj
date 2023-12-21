@@ -32,10 +32,6 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.Resources\Infrastructure.Resources.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\v1\" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 

@@ -4,11 +4,11 @@ using FluentValidation;
 
 namespace Application.Features.Authentication.Validators
 {
-    public class RecoveryPasswordConfirmValidator : AbstractValidator<RecoveryPasswordConfirmRequest>
+    public class BetRouletteCommandValidator : AbstractValidator<RecoveryPasswordConfirmRequest>
     {
         private readonly IAppResource AppResource;
 
-        public RecoveryPasswordConfirmValidator(IAppResource appResource)
+        public BetRouletteCommandValidator(IAppResource appResource)
         {
             AppResource = appResource;
 

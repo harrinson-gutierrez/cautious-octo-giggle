@@ -168,6 +168,9 @@
   <data name="ExceptionUserNotFound" xml:space="preserve">
     <value>Usuario no encontrado {0}</value>
   </data>
+  <data name="Roulette-Has-Not-Open" xml:space="preserve">
+    <value>La ruleta no ha sido abierta</value>
+  </data>
   <data name="Roulette-Has-Open" xml:space="preserve">
     <value>La Ruleta ya ha sido abierta</value>
   </data>
