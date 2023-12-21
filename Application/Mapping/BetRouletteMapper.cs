@@ -36,7 +36,8 @@ namespace Application.Mapping
                 color = betRouletteCommand.Color,
                 number = betRouletteCommand.Number,
                 roulette_id = betRouletteCommand.RouletteId,
-                user_id = betRouletteCommand.UserId
+                user_id = betRouletteCommand.UserId,
+                created_at = DateTime.Now
             };
         }
     }

@@ -56,7 +56,7 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
 
             int winnerRandom = RandomUtil.RangeNumber(0, 36);
 
-            var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id", new { entity.id });
+            var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id AND deleted_at IS NULL", new { entity.id });
             ProcessBetsRoulette(bets, winnerRandom);
 
             try
@@ -94,6 +94,8 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
                 {
                     bet.winner = false;
                 }
+
+                bet.deleted_at = DateTime.Now;
             });
         }
     }

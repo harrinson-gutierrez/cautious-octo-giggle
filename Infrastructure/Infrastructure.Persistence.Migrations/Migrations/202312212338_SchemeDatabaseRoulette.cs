@@ -26,7 +26,9 @@ namespace Infrastructure.Persistence.Migrations.Migrations
                 .WithColumn("number").AsInt16().Nullable()
                 .WithColumn("color").AsString().Nullable()
                 .WithColumn("winner").AsBoolean().WithDefaultValue(false)
-                .WithColumn("earned_bet").AsDecimal().Nullable();
+                .WithColumn("earned_bet").AsDecimal().Nullable()
+                .WithColumn("created_at").AsDateTime().Nullable()
+                .WithColumn("deleted_at").AsDateTime().Nullable();
 
             Create.ForeignKey("FK_bet_roulette_roulette_id_id")
                 .FromTable("bet_roulette").ForeignColumn("roulette_id")

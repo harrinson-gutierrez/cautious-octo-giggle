@@ -14,5 +14,7 @@ namespace Domain.Entities
         public string color { get; set; }
         public bool winner { get; set; }
         public decimal earned_bet { get; set; }
+        public DateTime? created_at { get; set; }
+        public DateTime? deleted_at { get; set; }
     }
 }
