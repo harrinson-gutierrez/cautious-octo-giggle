@@ -222,6 +222,12 @@
   <data name="PasswordTooShort" xml:space="preserve">
     <value>La contraseña deben tener un largo mínimo de {0} caracteres.</value>
   </data>
+  <data name="Roulette-Has-Open" xml:space="preserve">
+    <value>La Ruleta ya ha sido abierta</value>
+  </data>
+  <data name="Roulette-Not-Found" xml:space="preserve">
+    <value>La Ruleta no ha encontrada</value>
+  </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>El usuario ya tiene contraseña.</value>
   </data>

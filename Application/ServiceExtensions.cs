@@ -5,6 +5,8 @@ using FluentValidation;
 using System.Reflection;
 using Application.Resolvers;
 using Application.Interfaces.Services;
+using Application.Interfaces.Mapping;
+using Application.Mapping;
 
 namespace Application
 {
@@ -16,6 +18,8 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddSingleton<IUserContextResolverService<int>, UserContextResolverService>();
+
+            services.AddTransient<IRouletteMapper, RouletteMapper>();
         }
     }
 }

@@ -25,5 +25,7 @@ namespace Application.Wrappers
         public string Message { get; set; }
         public List<string> Errors { get; set; }
         public T Data { get; set; }
+
+        public static Response<T> Ok(T data) { return new Response<T>() { Data = data, Succeeded = true }; }
     }
 }

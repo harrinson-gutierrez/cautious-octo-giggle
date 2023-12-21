@@ -168,6 +168,12 @@
   <data name="ExceptionUserNotFound" xml:space="preserve">
     <value>Usuario no encontrado {0}</value>
   </data>
+  <data name="Roulette-Has-Open" xml:space="preserve">
+    <value>La Ruleta ya ha sido abierta</value>
+  </data>
+  <data name="Roulette-Not-Found" xml:space="preserve">
+    <value>Ruleta no encontrada</value>
+  </data>
   <data name="UserHasLoginWithProvider" xml:space="preserve">
     <value>Debes iniciar sesión con '{0}'</value>
   </data>

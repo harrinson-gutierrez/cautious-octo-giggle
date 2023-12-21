@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.Adapter.Email\Infrastructure.Adapter.Email.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Roulettes\Queries\" />
+  </ItemGroup>
+
 </Project>
