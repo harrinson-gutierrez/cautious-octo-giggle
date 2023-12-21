@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "6d7b082c-9085-43eb-9677-a6c42b1b7684",
+		"name": "Roulette API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5937271",
+		"_collection_link": "https://bofugroupcolombia.postman.co/workspace/Workspace-Harrinson-Gutierrez~5a9e0111-87e0-466f-8e5d-4ed3b07cf288/collection/5937271-6d7b082c-9085-43eb-9677-a6c42b1b7684?action=share&source=collection_link&creator=5937271"
+	},
+	"item": [
+		{
+			"name": "Roulette",
+			"item": [
+				{
+					"name": "Get All Roulettes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:57712/api/v1/Roulette",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"v1",
+								"Roulette"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Roulettes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:57712/api/v1/Roulette",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "57712",
+									"path": [
+										"api",
+										"v1",
+										"Roulette"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "api-supported-versions",
+									"value": "1.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Dec 2023 17:12:49 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"51bcbfa1-9ca7-4368-9aac-796f27f24c55\",\n    \"succeeded\": true,\n    \"message\": null,\n    \"errors\": null,\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Roulette",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:57712/api/v1/Roulette",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"v1",
+								"Roulette"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Roulette",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:57712/api/v1/Roulette",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "57712",
+									"path": [
+										"api",
+										"v1",
+										"Roulette"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "api-supported-versions",
+									"value": "1.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Dec 2023 17:12:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"864611ed-4c97-4535-9a0f-aeec071f6592\",\n    \"succeeded\": true,\n    \"message\": null,\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a\",\n        \"state\": \"CLOSED\",\n        \"bets\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Open Roulette",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Open",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"v1",
+								"Roulette",
+								"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+								"Open"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bet Roulette",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bet\": 10000,\r\n  \"number\": 4,\r\n  \"color\": \"RED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Bet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"v1",
+								"Roulette",
+								"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+								"Bet"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Open Roulette Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bet\": 10000,\r\n  \"number\": 4,\r\n  \"color\": \"RED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Bet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "57712",
+									"path": [
+										"api",
+										"v1",
+										"Roulette",
+										"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+										"Bet"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "api-supported-versions",
+									"value": "1.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Dec 2023 17:13:33 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"73bd3a9a-8188-415b-aa03-04543afd7620\",\n    \"succeeded\": true,\n    \"message\": null,\n    \"errors\": null,\n    \"data\": {\n        \"bet\": 10000,\n        \"number\": null,\n        \"color\": null,\n        \"userId\": 1,\n        \"earnedBet\": 0,\n        \"isWinner\": false\n    }\n}"
+						},
+						{
+							"name": "Open Roulette Not OPen",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bet\": 10000,\r\n  \"number\": 4,\r\n  \"color\": \"RED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Bet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "57712",
+									"path": [
+										"api",
+										"v1",
+										"Roulette",
+										"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+										"Bet"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "api-supported-versions",
+									"value": "1.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Dec 2023 17:15:00 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"TransactionId\": \"2ac6a276-4798-4eb5-a127-2e7616e98759\",\n    \"Succeeded\": false,\n    \"Message\": \"The roulette has not open\",\n    \"Errors\": null,\n    \"Data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Close Roulette",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Close",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"v1",
+								"Roulette",
+								"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+								"Close"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Close Roulette",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:57712/api/v1/Roulette/e70c150c-0c33-473e-a8c3-f4d8c0d00a3a/Close",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "57712",
+									"path": [
+										"api",
+										"v1",
+										"Roulette",
+										"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a",
+										"Close"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "api-supported-versions",
+									"value": "1.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Dec 2023 17:13:54 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactionId\": \"d3e27bff-601c-48fc-8ab5-c49b97c892d1\",\n    \"succeeded\": true,\n    \"message\": null,\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"e70c150c-0c33-473e-a8c3-f4d8c0d00a3a\",\n        \"state\": \"CLOSED\",\n        \"bets\": [\n            {\n                \"bet\": 10000,\n                \"number\": 4,\n                \"color\": \"RED\",\n                \"userId\": 1,\n                \"earnedBet\": 0,\n                \"isWinner\": false\n            },\n            {\n                \"bet\": 10000,\n                \"number\": 4,\n                \"color\": null,\n                \"userId\": 1,\n                \"earnedBet\": 0,\n                \"isWinner\": false\n            },\n            {\n                \"bet\": 10000,\n                \"number\": null,\n                \"color\": null,\n                \"userId\": 1,\n                \"earnedBet\": 0,\n                \"isWinner\": false\n            }\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"grantType\": 0,\r\n  \"accessToken\": \"string\",\r\n  \"refreshToken\": \"string\",\r\n  \"email\": \"hgutieco@gmail.com\",\r\n  \"password\": \"@Aa123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:57712/api/Authentication/Login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57712",
+					"path": [
+						"api",
+						"Authentication",
+						"Login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"grantType\": 0,\r\n  \"accessToken\": \"string\",\r\n  \"refreshToken\": \"string\",\r\n  \"email\": \"hgutieco@gmail.com\",\r\n  \"password\": \"@Aa123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:57712/api/Authentication/Login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57712",
+							"path": [
+								"api",
+								"Authentication",
+								"Login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Server",
+							"value": "Microsoft-IIS/10.0"
+						},
+						{
+							"key": "api-supported-versions",
+							"value": "1.0"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 21 Dec 2023 17:15:21 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"Bearer\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiIzZWVmNWIyNS0xYTBlLTRjMTItOTJjYi1hNTZjMTllMTBjNzMiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MjUyMSwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.Tp-fizsWdvDy5eBklJsU0LC_Tgv2jD-1_q0cID-X114\",\n    \"refreshToken\": \"34b1aafd-0a26-4c78-b062-575753d64ef6\",\n    \"expiration\": \"2023-12-21T18:15:21Z\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJqdGkiOiI4YWVjMjlkZC01NzA5LTQ1NGUtOTdjOC1kZjE1M2Y4NjM3MjQiLCJ1bmlxdWVfbmFtZSI6IkhHVVRJRUNPQEdNQUlMLkNPTSIsImVtYWlsIjoiSEdVVElFQ09AR01BSUwuQ09NIiwicm9sZSI6IkFETUlOIiwicGVybWlzc2lvbiI6WyJyb3VsZXR0ZTpyZWFkIiwicm91bGV0dGU6bmV3Iiwicm91bGV0dGU6b3BlbiIsInJvdWxldHRlOmJldCIsInJvdWxldHRlOmNsb3NlIl0sImV4cCI6MTcwMzE4MTAwNiwiaXNzIjoiV2ViQXBpRGV2IiwiYXVkIjoiV2ViQXBpRGV2In0.l0mxo2XpMLCiE8nO1MQDYI7TBe86r4kMk2voTHWWQH4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
