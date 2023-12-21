@@ -16,6 +16,7 @@ namespace Application.Mapping
             return new BetRouletteModel()
             {
                 Bet = roulette.bet,
+                Color  = roulette.color,
                 Number = roulette.number,
                 UserId = roulette.user_id
             };
@@ -32,6 +33,7 @@ namespace Application.Mapping
             {
                 id = Guid.NewGuid(),
                 bet = betRouletteCommand.Bet,
+                color = betRouletteCommand.Color,
                 number = betRouletteCommand.Number,
                 roulette_id = betRouletteCommand.RouletteId,
                 user_id = betRouletteCommand.UserId
