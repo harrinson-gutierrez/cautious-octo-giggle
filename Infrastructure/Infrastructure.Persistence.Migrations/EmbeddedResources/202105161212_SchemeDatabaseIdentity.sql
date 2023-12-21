@@ -5,13 +5,14 @@ INSERT INTO app_user("name", last_name, username, email, email_confirmed, "enabl
 
 INSERT INTO user_role(user_id, role_id) VALUES (1, 1);
 
---INSERT INTO permission(name, description) VALUES ('question:add', 'agregar preguntas');
---INSERT INTO permission(name, description) VALUES ('question:update', 'actualizar preguntas');
---INSERT INTO permission(name, description) VALUES ('question:read', 'leer preguntas');
---INSERT INTO permission(name, description) VALUES ('question:delete', 'eliminar una pregunta');
+INSERT INTO permission(name, description) VALUES ('roulette:read', 'Read Roulette');
+INSERT INTO permission(name, description) VALUES ('roulette:new', 'New Roulette');
+INSERT INTO permission(name, description) VALUES ('roulette:open', 'Open Roulette');
+INSERT INTO permission(name, description) VALUES ('roulette:bet', 'New Bet Roulette');
+INSERT INTO permission(name, description) VALUES ('roulette:close', 'Close Roulette');
 
-
---INSERT INTO role_permission(role_id, permission_id) VALUES (1, 1);
---INSERT INTO role_permission(role_id, permission_id) VALUES (1, 2);
---INSERT INTO role_permission(role_id, permission_id) VALUES (1, 3);
---INSERT INTO role_permission(role_id, permission_id) VALUES (1, 4);
+INSERT INTO role_permission(role_id, permission_id) VALUES (1, 1);
+INSERT INTO role_permission(role_id, permission_id) VALUES (1, 2);
+INSERT INTO role_permission(role_id, permission_id) VALUES (1, 3);
+INSERT INTO role_permission(role_id, permission_id) VALUES (1, 4);
+INSERT INTO role_permission(role_id, permission_id) VALUES (1, 5);

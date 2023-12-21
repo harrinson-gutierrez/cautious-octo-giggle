@@ -10,5 +10,7 @@ namespace Domain.Entities
         public decimal bet { get; set; }
         public int? number { get; set; } 
         public string color { get; set; }
+        public bool winner { get; set; }
+        public decimal earned_bet { get; set; }
     }
 }

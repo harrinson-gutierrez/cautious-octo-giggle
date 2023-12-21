@@ -1,8 +1,7 @@
-﻿namespace Application.DTOs.Roulette
+﻿namespace Application.Enums
 {
     public enum RouletteState
     {
-        CREATED,
         OPEN,
         CLOSED
     }

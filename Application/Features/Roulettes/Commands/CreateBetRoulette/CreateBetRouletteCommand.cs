@@ -1,5 +1,4 @@
-﻿using Application.DTOs.Roulette;
-using Application.DTOs.Roulettes;
+﻿using Application.DTOs.Roulettes;
 using Application.Enums;
 using Application.Exceptions;
 using Application.Interfaces.Mapping;
@@ -11,10 +10,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Roulettes.Commands.BetRoulette
+namespace Application.Features.Roulettes.Commands.CreateBetRoulette
 {
 
-    public class BetRouletteCommand : IRequest<Response<BetRouletteModel>>
+    public class CreateBetRouletteCommand : IRequest<Response<BetRouletteModel>>
     {
         public int UserId { get; set; }
         public Guid RouletteId { get; set; }
@@ -23,7 +22,7 @@ namespace Application.Features.Roulettes.Commands.BetRoulette
         public string Color { get; set; }
     }
 
-    public class BetRouletteCommandHandler : IRequestHandler<BetRouletteCommand, Response<BetRouletteModel>>
+    public class BetRouletteCommandHandler : IRequestHandler<CreateBetRouletteCommand, Response<BetRouletteModel>>
     {
         private readonly IRouletteRepository RouletteRepository;
         private readonly IBetRouletteMapper BetRouletteMapper;
@@ -41,7 +40,7 @@ namespace Application.Features.Roulettes.Commands.BetRoulette
             BetRouletteMapper = betRouletteMapper;
         }
 
-        public async Task<Response<BetRouletteModel>> Handle(BetRouletteCommand request, CancellationToken cancellationToken)
+        public async Task<Response<BetRouletteModel>> Handle(CreateBetRouletteCommand request, CancellationToken cancellationToken)
         {
             var roulette = await RouletteRepository.GetByIdAsync(request.RouletteId);
 

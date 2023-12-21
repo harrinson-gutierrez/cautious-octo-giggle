@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.DTOs.Roulette;
-using Application.Features.Roulettes.Commands.BetRoulette;
+using Application.Features.Roulettes.Commands.CreateBetRoulette;
 using Application.Features.Roulettes.Commands.CreateRoulette;
 using Application.Features.Roulettes.Queries.GetAllRoulette;
 using Application.Interfaces.Services;
@@ -45,7 +45,7 @@ namespace WebApi.Controllers.v1
         [ResourceAuthorize("roulette", "open")]
         public async Task<ActionResult<Response<RouletteModel>>> OpenRoulette([FromRoute] Guid rouletteId)
         {
-            return Ok(await Mediator.Send(new OpenRouletteCommand()
+            return Ok(await Mediator.Send(new CloseRouletteCommand()
             {
                 Id = rouletteId
             }));
@@ -55,12 +55,26 @@ namespace WebApi.Controllers.v1
         [SwaggerOperation(Summary = "New Bet Roulette")]
         [Authorize]
         [ResourceAuthorize("roulette", "bet")]
-        public async Task<ActionResult<Response<RouletteModel>>> BetRoulette([FromRoute] Guid rouletteId, [FromBody] BetRouletteCommand betRouletteCommand)
+        public async Task<ActionResult<Response<RouletteModel>>> BetRoulette([FromRoute] Guid rouletteId, 
+                                                                             [FromBody] CreateBetRouletteCommand betRouletteCommand)
         {
             betRouletteCommand.UserId = UserContextResolverService.GetUserId();
             betRouletteCommand.RouletteId = rouletteId;
 
             return Ok(await Mediator.Send(betRouletteCommand));
         }
+
+        [HttpPost("{rouletteId}/Close")]
+        [SwaggerOperation(Summary = "Close Bet Roulette")]
+        [Authorize]
+        [ResourceAuthorize("roulette", "close")]
+        public async Task<ActionResult<Response<RouletteModel>>> CloseRoulette([FromRoute] Guid rouletteId)
+        {
+            return Ok(await Mediator.Send(new CloseRouletteCommand()
+            {
+                Id = rouletteId
+            }));
+        }
+
     }
 }

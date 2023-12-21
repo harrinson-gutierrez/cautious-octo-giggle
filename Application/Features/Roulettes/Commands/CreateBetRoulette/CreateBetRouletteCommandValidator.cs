@@ -1,16 +1,14 @@
-﻿using Application.DTOs.Authentication;
-using Application.DTOs.Roulettes;
-using Application.Features.Roulettes.Commands.BetRoulette;
+﻿using Application.Enums;
 using Application.Interfaces.Resources;
 using FluentValidation;
 
-namespace Application.Features.Roulettes.Commands
+namespace Application.Features.Roulettes.Commands.CreateBetRoulette
 {
-    public class BetRouletteCommandValidator : AbstractValidator<BetRouletteCommand>
+    public class CreateBetRouletteCommandValidator : AbstractValidator<CreateBetRouletteCommand>
     {
         private readonly IAppResource AppResource;
 
-        public BetRouletteCommandValidator(IAppResource appResource)
+        public CreateBetRouletteCommandValidator(IAppResource appResource)
         {
             AppResource = appResource;
             When(x => x.Number != null, () =>

@@ -1,0 +1,95 @@
+﻿using Application.DTOs.Roulette;
+using Application.Enums;
+using Application.Exceptions;
+using Application.Interfaces.Mapping;
+using Application.Interfaces.Repositories;
+using Application.Interfaces.Resources;
+using Application.Util;
+using Application.Wrappers;
+using Domain.Entities;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Application.Features.Roulettes.Commands.CloseRoulette
+{
+    public class CloseRouletteCommand : IRequest<Response<RouletteModel>>
+    {
+        public Guid Id { get; set; }
+    }
+
+    public class CloseRouletteCommandHandler : IRequestHandler<CloseRouletteCommand, Response<RouletteModel>>
+    {
+        private readonly IRouletteRepository RouletteRepository;
+        private readonly IBetRouletteRepository BetRouletteRepository;
+        private readonly IRouletteMapper RouletteMapper;
+        private readonly IBetRouletteMapper BetRouletteMapper;
+        private readonly IAppResource AppResource;
+
+        public CloseRouletteCommandHandler(IRouletteRepository rouletteRepository,
+                                            IBetRouletteRepository betRouletteRepository,
+                                           IRouletteMapper rouletteMapper,
+                                           IBetRouletteMapper betRouletteMapper,
+                                           IAppResource appResource)
+        {
+            RouletteRepository = rouletteRepository;
+            RouletteMapper = rouletteMapper;
+            AppResource = appResource;
+            BetRouletteRepository = betRouletteRepository;
+            BetRouletteMapper = betRouletteMapper;
+        }
+
+        public async Task<Response<RouletteModel>> Handle(CloseRouletteCommand request, CancellationToken cancellationToken)
+        {
+            var entity = await RouletteRepository.GetByIdAsync(request.Id);
+
+            if (entity == null) throw new NotFoundException(AppResource["Roulette-Not-Found"]);
+
+            if (entity.State != RouletteState.OPEN.ConvertToString()) throw new ApiException(AppResource["Roulette-Has-Not-Open"]);
+
+            int winnerRandom = RandomUtil.RangeNumber(0, 36);
+
+            var bets = await BetRouletteRepository.GetAllWithQuery("WHERE roulette_id=@id", new { entity.Id });
+            ProcessBetsRoulette(bets, winnerRandom);
+
+            try
+            {
+                await BetRouletteRepository.UpdateAllAsync(bets);
+                entity.State = RouletteState.CLOSED.ConvertToString();
+                await RouletteRepository.UpdateAsync(entity);   
+            }
+            catch (Exception e)
+            {
+                throw new ApiException(AppResource["Roulette-cannot-close"], new { Error = e.Message});
+            }
+
+            var response = RouletteMapper.Convert(entity);
+            response.Bets = BetRouletteMapper.Convert(bets);
+
+            return Response<RouletteModel>.Ok(response);
+        }
+
+        private void ProcessBetsRoulette(List<BetRoulette> bets, int winnerRandom)
+        {
+            bets.ForEach(bet =>
+            {
+                if (bet.number == winnerRandom)
+                {
+                    bet.winner = true;
+                    bet.earned_bet = bet.bet * 5;
+                }
+                else if (bet.color == RouletteColorExtension.GetRouletteColor(winnerRandom).ConvertToString())
+                {
+                    bet.winner = true;
+                    bet.earned_bet = bet.bet * 1.8m;
+                }
+                else
+                {
+                    bet.winner = false;
+                }
+            });
+        }
+    }
+}

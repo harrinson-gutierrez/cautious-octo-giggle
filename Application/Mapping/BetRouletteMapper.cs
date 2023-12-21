@@ -1,6 +1,5 @@
-﻿using Application.DTOs.Roulette;
-using Application.DTOs.Roulettes;
-using Application.Features.Roulettes.Commands.BetRoulette;
+﻿using Application.DTOs.Roulettes;
+using Application.Features.Roulettes.Commands.CreateBetRoulette;
 using Application.Interfaces.Mapping;
 using Application.Mappings;
 using Domain.Entities;
@@ -18,7 +17,9 @@ namespace Application.Mapping
                 Bet = roulette.bet,
                 Color  = roulette.color,
                 Number = roulette.number,
-                UserId = roulette.user_id
+                UserId = roulette.user_id,
+                EarnedBet = roulette.earned_bet,
+                IsWinner = roulette.winner
             };
         }
 
@@ -27,7 +28,7 @@ namespace Application.Mapping
             return ConvertList(roulettes, (roulete) => Convert(roulete));
         }
 
-        public BetRoulette ConvertEntity(BetRouletteCommand betRouletteCommand)
+        public BetRoulette ConvertEntity(CreateBetRouletteCommand betRouletteCommand)
         {
             return new BetRoulette()
             {

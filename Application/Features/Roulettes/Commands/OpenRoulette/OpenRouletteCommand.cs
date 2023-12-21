@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Roulettes.Commands.CreateRoulette
 {
-    public class OpenRouletteCommand : IRequest<Response<RouletteModel>>
+    public class CloseRouletteCommand : IRequest<Response<RouletteModel>>
     {
         public Guid Id { get; set; }
     }
 
-    public class OpenRouletteCommandHandler : IRequestHandler<OpenRouletteCommand, Response<RouletteModel>>
+    public class OpenRouletteCommandHandler : IRequestHandler<CloseRouletteCommand, Response<RouletteModel>>
     {
         private readonly IRouletteRepository RouletteRepository;
         private readonly IRouletteMapper RouletteMapper;
@@ -31,7 +31,7 @@ namespace Application.Features.Roulettes.Commands.CreateRoulette
             AppResource = appResource;
         }
 
-        public async Task<Response<RouletteModel>> Handle(OpenRouletteCommand request, CancellationToken cancellationToken)
+        public async Task<Response<RouletteModel>> Handle(CloseRouletteCommand request, CancellationToken cancellationToken)
         {
 
             var entity = await RouletteRepository.GetByIdAsync(request.Id);
