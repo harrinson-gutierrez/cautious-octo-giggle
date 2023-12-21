@@ -20,6 +20,7 @@ namespace Application
             services.AddSingleton<IUserContextResolverService<int>, UserContextResolverService>();
 
             services.AddTransient<IRouletteMapper, RouletteMapper>();
+            services.AddTransient<IBetRouletteMapper, BetRouletteMapper>();
         }
     }
 }

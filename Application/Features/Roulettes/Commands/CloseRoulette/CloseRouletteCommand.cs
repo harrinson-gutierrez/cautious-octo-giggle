@@ -7,7 +7,9 @@ using Application.Interfaces.Resources;
 using Application.Util;
 using Application.Wrappers;
 using Domain.Entities;
+using Domain.Settings;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -27,18 +29,21 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
         private readonly IRouletteMapper RouletteMapper;
         private readonly IBetRouletteMapper BetRouletteMapper;
         private readonly IAppResource AppResource;
+        private readonly IOptions<RouletteOptions> CustomJwtOptions;
 
         public CloseRouletteCommandHandler(IRouletteRepository rouletteRepository,
                                             IBetRouletteRepository betRouletteRepository,
                                            IRouletteMapper rouletteMapper,
                                            IBetRouletteMapper betRouletteMapper,
-                                           IAppResource appResource)
+                                           IAppResource appResource,
+                                           IOptions<RouletteOptions> customJwtOptions)
         {
             RouletteRepository = rouletteRepository;
             RouletteMapper = rouletteMapper;
             AppResource = appResource;
             BetRouletteRepository = betRouletteRepository;
             BetRouletteMapper = betRouletteMapper;
+            CustomJwtOptions = customJwtOptions;
         }
 
         public async Task<Response<RouletteModel>> Handle(CloseRouletteCommand request, CancellationToken cancellationToken)
@@ -78,12 +83,12 @@ namespace Application.Features.Roulettes.Commands.CloseRoulette
                 if (bet.number == winnerRandom)
                 {
                     bet.winner = true;
-                    bet.earned_bet = bet.bet * 5;
+                    bet.earned_bet = bet.bet * decimal.Parse(CustomJwtOptions.Value.EarnedWinnerNumber);
                 }
                 else if (bet.color == RouletteColorExtension.GetRouletteColor(winnerRandom).ConvertToString())
                 {
                     bet.winner = true;
-                    bet.earned_bet = bet.bet * 1.8m;
+                    bet.earned_bet = bet.bet * decimal.Parse(CustomJwtOptions.Value.EarnedWinnerColor);
                 }
                 else
                 {

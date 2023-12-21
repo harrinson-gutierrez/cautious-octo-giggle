@@ -25,6 +25,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+            services.AddDomainLayer(Configuration);
             services.AddApplicationLayer();
             services.AddPersistenceInfrastructure(Configuration);
             services.AddFluentMigratorConsole(Configuration);
